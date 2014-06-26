@@ -59,6 +59,10 @@ module LSH
       results
     end
 
+    def self.from_json(j)
+      GSL::Matrix.alloc(JSON.parse(j))
+    end
+
   end
 
 end
@@ -69,13 +73,8 @@ module GSL
 
     def to_json(*a)
       {
-        'json_class' => self.class.name,
-        'data' => to_a,
+        to_a
       }.to_json(*a)
-    end
-
-    def self.json_create(o)
-      alloc(*o['data'])
     end
 
     def hash

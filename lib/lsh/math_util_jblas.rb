@@ -48,6 +48,10 @@ module LSH
       vs.uniq
     end
 
+    def self.from_json(o)
+      JBLAS::DoubleMatrix.from_array(JSON.parse(j)).t
+    end
+
   end
 
 end
@@ -59,13 +63,8 @@ module JBLAS
 
     def to_json(*a)
       {
-        'json_class' => 'JBLAS::DoubleMatrix',
-        'data' => to_a,
+        to_a,
       }.to_json(*a)
-    end
-
-    def self.json_create(o)
-      from_array(o['data']).t
     end
 
     def size

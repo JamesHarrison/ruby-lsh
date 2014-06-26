@@ -40,17 +40,22 @@ class MathUtilTest < Test::Unit::TestCase
 
   def test_json
     v = LSH::MathUtil.random_gaussian_matrix(1, 10)
-    assert_equal v, JSON.parse(v.to_json, :create_additions => true)
+    assert_equal v, JSON.parse(v.to_json)
   end
 
   def test_uniq
     v = LSH::MathUtil.random_gaussian_matrix(1, 10)
-    assert_equal 1, LSH::MathUtil.uniq([v, JSON.parse(v.to_json, :create_additions => true)]).size
+    assert_equal 1, LSH::MathUtil.uniq([v, JSON.parse(v.to_json)]).size
   end
 
   def test_hash
     v = LSH::MathUtil.random_gaussian_matrix(1, 10)
-    assert_equal v.hash, JSON.parse(v.to_json, :create_additions => true).hash
+    assert_equal v.hash, JSON.parse(v.to_json).hash
+  end
+
+  def test_from_json
+    v = LSH::MathUtil.random_gaussian_matrix(1, 10)
+    assert_equal v, LSH::MathUtil.json_create(v.to_json)
   end
 
 end
